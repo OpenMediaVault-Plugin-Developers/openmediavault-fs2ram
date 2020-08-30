@@ -35,32 +35,47 @@ Ext.define("OMV.module.admin.storage.flashmemory.Settings", {
     getFormItems: function() {
         return [{
             xtype: "fieldset",
-            title: "Details",
-            defaults: {
-                labelSeparator: ""
-            },
-            items: [{
-                xtype: "textfield",
-                name: "root",
-                fieldLabel: _("Root"),
-                submitValue: false,
-                readOnly: true
-            },{
-                xtype: "textfield",
-                name: "written",
-                fieldLabel: _("Write Kbytes"),
-                submitValue: false,
-                readOnly: true
-            }]
-        },{
-            xtype: "fieldset",
-            title: _("Notes (optional)"),
+            title: _("Information"),
             fieldDefaults: {
                 labelSeparator: ""
             },
             items: [{
                 border: false,
-                html: "<p>" + _("Fstab (/etc/fstab) needs to be changed manually. Following these steps to change:") +
+                html: "<p>" +
+                         _("<b>The Flash Memory plugin is automatically enabled after installation and moves most writes to the RAM without any further configuration.</b>") +
+                      "</p>"
+            },{
+                xtype: "textfield",
+                name: "root",
+                fieldLabel: _("System drive"),
+                submitValue: false,
+                readOnly: true,
+                plugins: [{
+                    ptype: "fieldinfo",
+                    text: _("Location of the OMV root file system")
+            },{
+                xtype: "textfield",
+                name: "written",
+                fieldLabel: _("Writes"),
+                submitValue: false,
+                readOnly: true,
+                plugins: [{
+                    ptype: "fieldinfo",
+                    text: _("Amount of data (in kB), that got written to the system drive since last boot")
+                }]
+            }]
+        },{
+            xtype: "fieldset",
+            title: _("Optional settings"),
+            fieldDefaults: {
+                labelSeparator: ""
+            },
+            items: [{
+                border: false,
+                html: "<p>" +
+                         _("<b>The following instructions are for advanced users only!  Make sure to have sufficient RAM installed for your use case.</b>") +
+                         _("<b>Be aware, that disabling and removing the swap partition only slightly decreases writes, but can lead to issues, warnings and system freezes</b>.") +
+                         _("Fstab (/etc/fstab) needs to be changed manually. Follow these steps:") +
                          "<ol>" +
                            "<li>" + _("Login as root locally or via ssh") + "</li>" +
                            "<li>" + _("Execute the following command:  <b>nano /etc/fstab</b>") + "</li>" +
